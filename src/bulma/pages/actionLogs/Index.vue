@@ -13,7 +13,7 @@
             <div class="column is-narrow">
                 <EnsoSelectFilter class="box method"
                     compact
-                    :options="enumStore.enums.actionLogMethods._select()"
+                    :options="enums().enums.actionLogMethods._select()"
                     :placeholder="i18n('Method')"
                     v-model="filters.action_logs.method"/>
             </div>
@@ -25,8 +25,7 @@
                     label="name"
                     :name="i18n('Permission')"
                     :placeholder="i18n('Permission')"
-                    v-model="filters.action_logs.route"
-                    ref="permissionFilter"/>
+                    v-model="filters.action_logs.route"/>
             </div>
             <div class="column is-narrow">
                 <EnsoDateFilter class="box"
@@ -58,7 +57,7 @@
             </template>
             <template #permission="{ row }">
                 <span class="tag is-dark is-clickable"
-                    @click="selectPermission(row.permission.name)"
+                    @click="filters.action_logs.route = row.permission.name"
                     v-if="row.permission">
                     {{ row.permission.name }}
                 </span>
@@ -68,17 +67,15 @@
 </template>
 
 <script setup>
-import { inject, nextTick, reactive, ref } from 'vue';
+import { inject, reactive, ref } from 'vue';
 import { EnsoDateFilter, EnsoSelectFilter } from '@enso-ui/filters/bulma';
-import { enums as useEnumStore } from '@enso-ui/enums/src/pinia/enums';
+import { enums } from '@enso-ui/enums/src/pinia/enums';
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import Avatar from '@enso-ui/users/src/bulma/pages/users/components/Avatar.vue';
 
 const i18n = inject('i18n');
-const enumStore = useEnumStore();
 
 const dateFilter = ref('all');
-const permissionFilter = ref(null);
 
 const filters = ref({
     action_logs: {
@@ -99,25 +96,20 @@ const intervals = reactive({
 
 const cssClass = method => {
     switch (`${method}`) {
-    case enumStore.enums.actionLogMethods.POST:
+    case enums().enums.actionLogMethods.POST:
         return 'is-success';
-    case enumStore.enums.actionLogMethods.PATCH:
-    case enumStore.enums.actionLogMethods.PUT:
+    case enums().enums.actionLogMethods.PATCH:
+    case enums().enums.actionLogMethods.PUT:
         return 'is-warning';
-    case enumStore.enums.actionLogMethods.DELETE:
+    case enums().enums.actionLogMethods.DELETE:
         return 'is-danger';
-    case enumStore.enums.actionLogMethods.GET:
-    case enumStore.enums.actionLogMethods.OPTIONS:
-    case enumStore.enums.actionLogMethods.HEAD:
+    case enums().enums.actionLogMethods.GET:
+    case enums().enums.actionLogMethods.OPTIONS:
+    case enums().enums.actionLogMethods.HEAD:
         return 'is-info';
     default:
         return null;
     }
-};
-
-const selectPermission = permission => {
-    filters.value.action_logs.route = permission;
-    nextTick(() => permissionFilter.value.fetch());
 };
 </script>
 

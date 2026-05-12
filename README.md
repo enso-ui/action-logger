@@ -1,7 +1,7 @@
 # Action Logger
 
 [![License](https://img.shields.io/badge/license-MIT-10b981.svg)](https://github.com/enso-ui/action-logger/blob/main/LICENSE)
-[![Stable](https://img.shields.io/badge/stable-1.1.0-2563eb.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
+[![Stable](https://img.shields.io/badge/stable-1.1.1-2563eb.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
 [![Downloads](https://img.shields.io/npm/dm/@enso-ui/action-logger.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
 [![Vue](https://img.shields.io/badge/vue-3.x-42b883.svg)](https://vuejs.org/)
 [![JavaScript](https://img.shields.io/badge/javascript-ES2020-f7df1e.svg)](https://developer.mozilla.org/docs/Web/JavaScript)
@@ -31,7 +31,7 @@ This package is also available through the full `enso-ui` workspace bundle.
 - renders user avatars through the users package
 - supports click-to-filter behavior on user avatars, method tags and permission tags
 - colors method tags by REST intent: informational reads, successful creates, warnings for updates, and danger for deletes
-- refreshes the permission filter after click-to-filter so server-side permission options resolve the selected value correctly
+- relies on select's server-side option resolution when click-to-filter sets a permission value
 - integrates with the backend `actionLogMethods` enum and `actionLogs` table definition
 
 ## Usage
