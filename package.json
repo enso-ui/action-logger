@@ -1,0 +1,52 @@
+{
+  "name": "@enso-ui/action-logger",
+  "version": "1.0.0",
+  "description": "Action log table pages for Enso UI.",
+  "main": "src/bulma/pages/actionLogs/Index.vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enso-ui/action-logger.git"
+  },
+  "keywords": [
+    "action-logger",
+    "enso",
+    "vue"
+  ],
+  "author": "Adrian Ocneanu <aocneanu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/enso-ui/action-logger/issues"
+  },
+  "homepage": "https://github.com/enso-ui/action-logger#readme",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/vue-fontawesome": "3.1.3"
+  },
+  "peerDependencies": {
+    "@enso-ui/enums": "^2.1.0",
+    "@enso-ui/filters": "^3.3.0",
+    "@enso-ui/tables": "^4.1.0",
+    "@enso-ui/ui": "^7.1.0",
+    "@enso-ui/users": "^3.1.0",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@enso-ui/enums": "^2.1.0",
+    "@enso-ui/filters": "^3.3.0",
+    "@enso-ui/tables": "^4.1.0",
+    "@enso-ui/ui": "^7.1.0",
+    "@enso-ui/users": "^3.1.0",
+    "jsdom": "^26.1.0",
+    "pinia": "^3.0.3",
+    "sass-embedded": "^1.93.2",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.0"
+  }
+}
