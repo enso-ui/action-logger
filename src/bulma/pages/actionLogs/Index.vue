@@ -13,7 +13,7 @@
             <div class="column is-narrow">
                 <EnsoSelectFilter class="box method"
                     compact
-                    :options="enums.actionLogMethods._select()"
+                    :options="enumStore.enums.actionLogMethods._select()"
                     :placeholder="i18n('Method')"
                     v-model="filters.action_logs.method"/>
             </div>
@@ -25,7 +25,8 @@
                     label="name"
                     :name="i18n('Permission')"
                     :placeholder="i18n('Permission')"
-                    v-model="filters.action_logs.route"/>
+                    v-model="filters.action_logs.route"
+                    ref="permissionFilter"/>
             </div>
             <div class="column is-narrow">
                 <EnsoDateFilter class="box"
@@ -49,14 +50,15 @@
                 </span>
             </template>
             <template #method="{ column, row }">
-                <span class="tag is-dark is-clickable"
+                <span class="tag is-clickable"
+                    :class="cssClass(row.method)"
                     @click="filters.action_logs.method = row.method">
                     {{ column.enum._get(row.method) }}
                 </span>
             </template>
             <template #permission="{ row }">
-                <span class="tag is-info is-light is-clickable"
-                    @click="filters.action_logs.route = row.permission.name"
+                <span class="tag is-dark is-clickable"
+                    @click="selectPermission(row.permission.name)"
                     v-if="row.permission">
                     {{ row.permission.name }}
                 </span>
@@ -66,17 +68,17 @@
 </template>
 
 <script setup>
-import { inject, reactive, ref } from 'vue';
+import { inject, nextTick, reactive, ref } from 'vue';
 import { EnsoDateFilter, EnsoSelectFilter } from '@enso-ui/filters/bulma';
-import { enums as useEnums } from '@enso-ui/enums/src/pinia/enums';
+import { enums as useEnumStore } from '@enso-ui/enums/src/pinia/enums';
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import Avatar from '@enso-ui/users/src/bulma/pages/users/components/Avatar.vue';
 
 const i18n = inject('i18n');
-
-const { enums } = useEnums();
+const enumStore = useEnumStore();
 
 const dateFilter = ref('all');
+const permissionFilter = ref(null);
 
 const filters = ref({
     action_logs: {
@@ -94,6 +96,29 @@ const intervals = reactive({
         },
     },
 });
+
+const cssClass = method => {
+    switch (`${method}`) {
+    case enumStore.enums.actionLogMethods.POST:
+        return 'is-success';
+    case enumStore.enums.actionLogMethods.PATCH:
+    case enumStore.enums.actionLogMethods.PUT:
+        return 'is-warning';
+    case enumStore.enums.actionLogMethods.DELETE:
+        return 'is-danger';
+    case enumStore.enums.actionLogMethods.GET:
+    case enumStore.enums.actionLogMethods.OPTIONS:
+    case enumStore.enums.actionLogMethods.HEAD:
+        return 'is-info';
+    default:
+        return null;
+    }
+};
+
+const selectPermission = permission => {
+    filters.value.action_logs.route = permission;
+    nextTick(() => permissionFilter.value.fetch());
+};
 </script>
 
 <style lang="scss">
