@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/action-logger",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Action log table pages for Enso UI.",
   "main": "src/bulma/pages/actionLogs/Index.vue",
   "repository": {

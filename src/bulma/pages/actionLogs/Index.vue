@@ -5,10 +5,20 @@
                 <EnsoSelectFilter class="box user"
                     compact
                     source="administration.users.options"
+                    :key="params.roleId"
+                    :params="userParams"
                     label="person.name"
                     :name="i18n('User')"
                     :placeholder="i18n('User')"
                     v-model="filters.action_logs.user_id"/>
+            </div>
+            <div class="column is-narrow">
+                <EnsoSelectFilter class="box role"
+                    compact
+                    source="system.roles.options"
+                    :name="i18n('Role')"
+                    :placeholder="i18n('Role')"
+                    v-model="params.roleId"/>
             </div>
             <div class="column is-narrow">
                 <EnsoSelectFilter class="box method"
@@ -36,8 +46,9 @@
         </div>
         <EnsoTable class="box p-0"
             v-model:filters="filters"
+            v-model:params="params"
             :intervals="intervals"
-            :filter-version="1"
+            :filter-version="1.1"
             id="actionLogs">
             <template #user="{ row }">
                 <span class="is-inline-flex is-clickable"
@@ -67,7 +78,7 @@
 </template>
 
 <script setup>
-import { inject, reactive, ref } from 'vue';
+import { computed, inject, reactive, ref } from 'vue';
 import { EnsoDateFilter, EnsoSelectFilter } from '@enso-ui/filters/bulma';
 import { enums } from '@enso-ui/enums/src/pinia/enums';
 import { EnsoTable } from '@enso-ui/tables/bulma';
@@ -84,6 +95,12 @@ const filters = ref({
         route: null,
     },
 });
+
+const params = ref({ roleId: null });
+
+const userParams = computed(() => (params.value.roleId
+    ? { role_id: params.value.roleId }
+    : {}));
 
 const intervals = reactive({
     action_logs: {
@@ -115,6 +132,10 @@ const cssClass = method => {
 
 <style lang="scss">
 .action-logs-wrapper {
+    .select-filter.role {
+        width: 14em;
+    }
+
     .select-filter.user {
         width: 18em;
     }

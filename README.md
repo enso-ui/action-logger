@@ -1,7 +1,7 @@
 # Action Logger
 
 [![License](https://img.shields.io/badge/license-MIT-10b981.svg)](https://github.com/enso-ui/action-logger/blob/main/LICENSE)
-[![Stable](https://img.shields.io/badge/stable-1.1.1-2563eb.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
+[![Stable](https://img.shields.io/badge/stable-1.1.2-2563eb.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
 [![Downloads](https://img.shields.io/npm/dm/@enso-ui/action-logger.svg)](https://www.npmjs.com/package/@enso-ui/action-logger)
 [![Vue](https://img.shields.io/badge/vue-3.x-42b883.svg)](https://vuejs.org/)
 [![JavaScript](https://img.shields.io/badge/javascript-ES2020-f7df1e.svg)](https://developer.mozilla.org/docs/Web/JavaScript)
@@ -27,7 +27,8 @@ This package is also available through the full `enso-ui` workspace bundle.
 ## Features
 
 - exports the action logs index page used by the system route group
-- filters action logs by user, HTTP method, permission and creation date
+- filters action logs by user, role, HTTP method, permission and creation date
+- limits user filter options to the selected role, clearing incompatible user selections
 - renders user avatars through the users package
 - supports click-to-filter behavior on user avatars, method tags and permission tags
 - colors method tags by REST intent: informational reads, successful creates, warnings for updates, and danger for deletes
@@ -67,10 +68,13 @@ The page expects these backend sources:
 - `system.actionLogs.exportExcel`
 - `system.permissions.options`
 - `administration.users.options`
+- `system.roles.options`
 
 The method filter uses the shared `actionLogMethods` enum store. The permission filter tracks permissions by `name`, matching the backend route-name storage used by the action logger.
 
 ## Companion Backend Package
+
+Role filtering requires `laravel-enso/action-logger` 3.8.3 or later. The table sends the selected role as `params.roleId`.
 
 - [`laravel-enso/action-logger`](https://github.com/laravel-enso/action-logger)
 
